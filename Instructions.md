@@ -72,21 +72,45 @@ requests coming from a 172.0.0.0/18 subnet
 
 - c) create a user for yourself and include the user in the **sudo** group
 
-        Adding a new user:
-        $ adduser <username>
+        Adda new user using below command:
+         $ adduser manan
         
-        Adding user into sudo group:
-        $ adduser <username> sudo
+        <password for this account is alayacareassignment>
         
-        another way to add into sudo group is:
-        $ (sudo) usermod -aG <groupname> <username>
+        Below was the Output:
+                   
+            Adding user `manan' ...
+            Adding new group `manan' (1000) ...
+            Adding new user `manan' (1000) with group `manan' ...
+            Creating home directory `/home/manan' ...
+            Copying files from `/etc/skel' ...
+            Enter new UNIX password:
+            Retype new UNIX password:
+            passwd: password updated successfully
+            Changing the user information for manan
+            Enter the new value, or press ENTER for the default
+                    Full Name []: Mananpreet Singh
+                    Room Number []: 1908
+                    Work Phone []: 000-000-0000
+                    Home Phone []:
+                    Other []:
+            Is the information correct? [Y/n] Y
+
+        
+        Add user into sudo group using below command:
+        $ adduser manan sudo
+        
+        Another way to add into sudo group is <use sudo in front of command if it's not root account>:
+        $ usermod -aG <groupname> <username>
           
 - d) ensure that all the packages installed below are locked to the version installed, however, security updates need to be installed on every run
 
        sudo apt-mark hold package_name
       
+#### switching to user "manan" to perform the further operation since manan is the part of sudo group and can perform root operations. So most of the commands you will see ownward proceeded by "sudo".
 
 - e) implement a firewall to restrict network access (ports only)
+
 Firewall protection can be implemented either using Uncomplicated Firewall (UFW) or iptables. UFW is installed by default on Ubuntu to ease iptables firewall configuration, ufw provides a user-friendly way to create an IPv4 or IPv6 host-based firewall. The UFW is a frontend for iptables and is particularly well-suited for host-based firewalls.
 
        Check the status of UFW:
