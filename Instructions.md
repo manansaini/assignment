@@ -106,8 +106,12 @@ requests coming from a 172.0.0.0/18 subnet
 - d) ensure that all the packages installed below are locked to the version installed, however, security updates need to be installed on every run
 
        sudo apt-mark hold package_name
-      
-#### switching to user "manan" to perform the further operation since manan is the part of sudo group and can perform root operations. So most of the commands you will see ownward proceeded by "sudo".
+  
+  
+  
+#### Switching to user "manan" to perform the further operation since manan is the part of sudo group and can perform root operations. So most of the commands you will see ownward proceeded by "sudo".
+
+
 
 - e) implement a firewall to restrict network access (ports only)
 
@@ -115,37 +119,35 @@ Firewall protection can be implemented either using Uncomplicated Firewall (UFW)
 
        Check the status of UFW:
        $ sudo ufw status
+       or
        $ sudo ufw status verbose
        
-       Syntax:
-       sudo ufw allow <port>/<optional: protocol>
-       sudo ufw deny <port>/<optional: protocol>
+       Syntax to allow ordeny ports in ufw firewall are:
+        $ sudo ufw allow <port>/<optional: protocol>
+        $ sudo ufw deny <port>/<optional: protocol>
 
-
-       $ sudo ufw enable
-       $ sudo ufw allow 22
-       $ sudo ufw allow 80
-       $ sudo ufw allow 443
-       $ sudo ufw allow 21/tcp
+       Enable the firewall suing below command:
+        $ sudo ufw enable
        
-       # For specific port ranges:
-       $ sudo ufw allow 3000:3007/tcp
-       $ sudo ufw allow 3000:3007/udp
+       Added traffic to below incoming ports for this assignment purposes:       
+        $ sudo ufw allow 22
+        $ sudo ufw allow 80
+        $ sudo ufw allow 443
+        $ sudo ufw allow 21/tcp
        
-       
-       or 
-       
-       Can also use the service name rather than port number:
-       $ sudo ufw enable
-       $ sudo ufw allow ssh
-       $ sudo ufw allow http
-       $ sudo ufw allow https
-       $ sudo ufw allow ftp
+       If you have to allow port range you can do it as :
+        $ sudo ufw allow 3000:3007/tcp
+        $ sudo ufw allow 3000:3007/udp
        
        
-       https://wiki.ubuntu.com/UncomplicatedFirewall
-
-
+       If service name need to be enable rather than port number it can be done as below:
+        $ sudo ufw enable
+        $ sudo ufw allow ssh
+        $ sudo ufw allow http
+        $ sudo ufw allow https
+        $ sudo ufw allow ftp
+       
+       
 #### 2. Install required packages
  
 Setup Mariadb 10+, PostgreSQL 9.4 and MongoDB. In Mariadb:
