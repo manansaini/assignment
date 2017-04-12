@@ -44,25 +44,31 @@ requests coming from a 172.0.0.0/18 subnet
  
  ---------------------------------------------------------
  
+ Login to the Ubuntu server using private key authentication.
+ 
  #### 1. Secure System
  - a) disable ssh login for root
       
-       cd to the path /etc/ssh/sshd_config and updated the below changes:
-       $ PermitRootLogin no
-       after making the changes restart the SSH using:
-       $ (sudo) service ssh restart
-
+       Edit the ssh config file using vi editor as below:
+        $ vi /etc/ssh/sshd_config
+       
+       Find the below line and change it to PermitRootLogin as no:
+        PermitRootLogin no
+        
+       After making the changes SSH need to be restarted but we will restart after next step.
+       
 - b) disable ssh password based login
 
-        $ cd /etc/ssh/sshd_config
+       Edit the ssh config file using vi editor as below:
+        $ vi /etc/ssh/sshd_config
         
-        $ #PasswordAuthentication yes
-        comment it and change it to NO
-
-        $ PasswordAuthentication no
-        
-        then restarted the ssh service
-       $ (sudo) service ssh restart
+       Find the below line if value is not set to no change it to no, which is already no in our case:    
+        PasswordAuthentication no
+       
+       Clsoe the editor using keyboard keys <esc> : wq <enter>
+       
+       Now restart theSH service using below command:
+        $ service ssh restart
 
 - c) create a user for yourself and include the user in the **sudo** group
 
