@@ -197,60 +197,75 @@ In Mariadb:
        Reload privilege tables now? [Y/n] Y
        
        
-       Below command give you the information of which version it is intalled:
-       
-       
+       Below command give you the information of which version it is installed:
+              
         manan@devops-test-01:~$ mysql -V
         mysql  Ver 15.1 Distrib 10.1.22-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2
+        
+       In order to do the next steps we need to login into maridb as root and command that I used as below:
+         manan@devops-test-01:~$ mysql -u root -p
+         Enter password:
+         Welcome to the MariaDB monitor. 
 
-
-              
+             
 - b) create a user (do not create a super user), create a database owned by that user
       
-      CREATE DATABASE maria-db-test;
+       CREATE DATABASE maria_db_test
+       CREATE USER 'maria-user-test'@'localhost' IDENTIFIED BY 'maria-user-password';
       
-      CREATE USER 'maria-user-test'@'localhost' IDENTIFIED BY 'maria-user-password';
-      CREATE USER 'maria-user-test'@'%' IDENTIFIED BY 'maria-user-password';
-      
+      In order to provide "maria_db_test" db access to user use the below command:
+       GRANT ALL PRIVILEGES ON maria_db_test.* TO 'maria-user-test'@'localhost';
+       FLUSH PRIVILEGES; 
+ 
 - c) allow remote access to the database created using the user above
 
-      $ vi /etc/my.cnf 
+      You need to edit the default config file that can be foun at /etc/mysql/my.cnf
+      $ vi /etc/mysql/my.cnf
       
-      comment below lines:
+      Comment below lines:   
+       #bind-address           = 127.0.0.1
+       #skip-networking   [ Instead of skip-networking the default is now to listen only on localhost, so  skip-networking line is not there]
+
+      Saved the file and restart mysql using below command:      
+       $ sudo service mysql restart
       
-      #skip-networking
-      #bind-address = <some ip-address>
-      
-      save the file and restart mysql
-      
-      sudo service mysql restart
-      
-      
-      GRANT ALL PRIVILEGES ON maria-db-test.* TO 'maria-user-test'@'localhost';
-      GRANT ALL PRIVILEGES ON maria-db-test.* TO 'maria-user-test'@'%';
-      FLUSH PRIVILEGES;
+      Now provide the remore access to database created above: 
+      mysql -u root -p
+      Enter password:
+      Welcome to the MariaDB monitor.
+  
+       GRANT ALL PRIVILEGES ON maria_db_test.* TO 'maria-user-test'@'%' IDENTIFIED BY 'maria-user-password';
+       FLUSH PRIVILEGES;
       
       FYI:
       If you want to give remote access to specific IP then need to create user with specific ip and grant privileges to same ip
       
       CREATE USER 'maria-user-test'@'192.168.100.33' IDENTIFIED BY 'maria-user-password';
-      GRANT ALL PRIVILEGES ON maria-db-test.* TO 'maria-user-test'@'192.168.100.33';
+      GRANT ALL PRIVILEGES ON maria_db_test.* TO 'maria-user-test'@'192.168.100.33';
       
-      
-      https://rbgeek.wordpress.com/2014/09/23/enable-remote-access-of-mysql-on-ubuntu/
+#### Since mysql is running on port 3306, So this port needs to be added in ufw list using command: sudo ufw allow 3306
       
 
 - d) enforce ssl connection for the user (optional)
 
-
-      GRANT USAGE ON maria-db-test.* TO 'maria-user-test'@'%' REQUIRE SSL;
+      WE can use below command to enforce the  ssl connection but SSL cert needs to be created and installed for that:
+       GRANT USAGE ON maria-db-test.* TO 'maria-user-test'@'%' REQUIRE SSL;
       
-      https://www.cyberciti.biz/faq/how-to-setup-mariadb-ssl-and-secure-connections-from-clients/
-
-
 2. Install: PostgreSQL 9.4
 
-    $ apt-get install postgresql-9.4
+       In order to install this specific version "$ apt-get install postgresql-9.4" command won't work, It will not find the specific package. In order to do the work around  please follow the below steps:
+
+       1. Create the file /etc/apt/sources.list.d/pgdg.list, and add a line for the repository
+          deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main
+          
+       2. Import the repository signing key, and update the package lists
+           wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+           sudo apt-key add -
+           sudo apt-get update
+           
+       3. $ apt-get install postgresql-9.4
+
+Source for above instructions: https://www.postgresql.org/download/linux/ubuntu/
     
 
 
