@@ -150,18 +150,61 @@ Firewall protection can be implemented either using Uncomplicated Firewall (UFW)
        
 #### 2. Install required packages
  
-Setup Mariadb 10+, PostgreSQL 9.4 and MongoDB. In Mariadb:
+Setup Mariadb 10+, PostgreSQL 9.4 and MongoDB. 
 
 1. Install Mariadb on ubuntu:
-       
-       http://www.tecmint.com/install-mariadb-in-ubuntu-and-debian/
-   
+          
+        Before installting MAriadb we need to import the repository key and add the MariaDB repository. Here are the commands that I used :
 
+       $ sudo apt-get install software-properties-common
+       $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+       $ sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mariadb.mirror.rafal.ca/repo/10.1/ubuntu xenial main'
+
+
+       Once the key is imported and the repository added, I used below commands to install Mariadb 10.1:
+
+        $ sudo apt update
+        $ sudo apt install mariadb-server
+       
+       Follow the prompt to create password for "root" user which I setup to "alayacare-mariadb" for this assignment purposes.
+       
+       Once installation completed check the mariadb servie if it is running:
+       
+        $ sudo systemctl status mariadb
+        
+       If needed we can stop and start using below commands:
+        $ sudo systemctl stop mariadb
+        $ sudo systemctl start mariadb
+       
+       In order to auto start it when next time system starts it needs to be enabled using:
+       
+        $ sudo systemctl enable mariadb
+
+
+In Mariadb:
  
 - a) create a secure root user login
 
-       Follow as above
+       To secure the mariadb installtion use the below command:
+        $ sudo mysql_secure_installation
        
+       And follow the prompt, I have selected below options to secure the installation and root user login:
+       
+       Change the root password? [Y/n] n
+       Remove anonymous users? [Y/n] Y
+       Disallow root login remotely? [Y/n] Y
+       Remove test database and access to it? [Y/n] Y
+       Reload privilege tables now? [Y/n] Y
+       
+       
+       Below command give you the information of which version it is intalled:
+       
+       
+        manan@devops-test-01:~$ mysql -V
+        mysql  Ver 15.1 Distrib 10.1.22-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2
+
+
+              
 - b) create a user (do not create a super user), create a database owned by that user
       
       CREATE DATABASE maria-db-test;
@@ -205,16 +248,17 @@ Setup Mariadb 10+, PostgreSQL 9.4 and MongoDB. In Mariadb:
       https://www.cyberciti.biz/faq/how-to-setup-mariadb-ssl-and-secure-connections-from-clients/
 
 
-Install: PostgreSQL 9.4
+2. Install: PostgreSQL 9.4
 
     $ apt-get install postgresql-9.4
     
 
 
-Install: MongoDB
+3. Install: MongoDB
     
     https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
     
+
     
     #### 3. System Monitoring
  
