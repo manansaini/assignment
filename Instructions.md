@@ -1,4 +1,22 @@
 
+### Instructions
+ 
+1. A virtual machine will be provided to you for completing these tasks
+2. Please write Salt code for all the steps required for configuring the machine
+3. The Salt code needs to be shared using git. Please create an appropriate repository and share
+it with us
+4. Within the repository please add a text document detailing your process, the problems faced and
+how they were resolved
+5. Please share your public ssh key with us and contact us if there are any issues with accessing the machine
+ 
+ 
+        New user "manan" public key: (I have added this key on server though)
+
+          manan@devops-test-01:~/.ssh$ cat manan-alayacare-ssh.pub
+
+         ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGTPr0SREeyJUdCFlCFTo37AYADSTxYFY55xnETgYVH/12H3FDHwhNDokM8K+a9SrXk4eHk2+VGaRMNIQdM/3+u7Z2GyA15iITBgNZrDCXOnIpVMLTMX0yzHaQL+d3n14oJCRTNJJn/oLduHXOrDJSjFAsUsBg0BGaBAVcGkVDXPmrc46Xhf+Al/Hck8hmdNr84BdRolV2JWDr08Lw1WPF12Ld1CnrUuRQ4xfQmcYhVdQPU3vSv9xPj1GqaqQ6QbWXaOq54fGvTUR1Oyuc9cLX13dg4mBO4lsb1glyW2M5F9XGLBAlChIf1j+24mIoVf0ID2DF2QHCwla/HRrKlWQD manan@devops-test-01
+
+
 
 ### Tasks
  
@@ -46,13 +64,7 @@ requests coming from a 172.0.0.0/18 subnet
  
  Login to the Ubuntu server using private key authentication.
  
- New user "manan" public key:
- 
- manan@devops-test-01:~/.ssh$ cat manan-alayacare-ssh.pub
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGTPr0SREeyJUdCFlCFTo37AYADSTxYFY55xnETgYVH/12H3FDHwhNDokM8K+a9SrXk4eHk2+VGaRMNIQdM/3+u7Z2GyA15iITBgNZrDCXOnIpVMLTMX0yzHaQL+d3n14oJCRTNJJn/oLduHXOrDJSjFAsUsBg0BGaBAVcGkVDXPmrc46Xhf+Al/Hck8hmdNr84BdRolV2JWDr08Lw1WPF12Ld1CnrUuRQ4xfQmcYhVdQPU3vSv9xPj1GqaqQ6QbWXaOq54fGvTUR1Oyuc9cLX13dg4mBO4lsb1glyW2M5F9XGLBAlChIf1j+24mIoVf0ID2DF2QHCwla/HRrKlWQD manan@devops-test-01
 
- 
- 
  #### 1. Secure System
  - a) disable ssh login for root
       
