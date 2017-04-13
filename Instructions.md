@@ -105,7 +105,27 @@ requests coming from a 172.0.0.0/18 subnet
           
 - d) ensure that all the packages installed below are locked to the version installed, however, security updates need to be installed on every run
 
-       sudo apt-mark hold package_name
+       sudo apt-mark hold <package_name>
+       
+       Following are the commands that I used to lock the version installed:
+       
+       sudo apt-mark hold mariadb-server
+       sudo apt-mark hold postgresql-9.4
+       sudo apt-mark hold mongodb-org
+       sudo apt-mark hold monit
+
+       OutPut:
+       
+        manan@devops-test-01:~$ sudo vi /etc/monit/monitrc
+        [sudo] password for manan:
+        manan@devops-test-01:~$ sudo apt-mark hold mariadb-server
+        mariadb-server set on hold.
+        manan@devops-test-01:~$ 
+        manan@devops-test-01:~$ sudo apt-mark hold postgresql-9.4
+        postgresql-9.4 set on hold.
+        manan@devops-test-01:~$ sudo apt-mark hold mongodb-org
+        mongodb-org set on hold.
+
   
   
   
@@ -264,9 +284,7 @@ In Mariadb:
            sudo apt-get update
            
        3. $ apt-get install postgresql-9.4
-
-Source for above instructions: https://www.postgresql.org/download/linux/ubuntu/
-    
+   
 
 
 3. Install: MongoDB
@@ -316,9 +334,9 @@ Install M/Monit on the server and ensure:
       stop program = "/etc/init.d/postgresql stop"
       #
       #
-      check process mongodb with pidfile "/var/lib/mongodb/mongod.lock"
-       start program = "/sbin/start mongodb"
-       stop program = "/sbin/stop mongodb"
+      #check process mongodb with pidfile "/var/lib/mongodb/mongod.lock"
+      # start program = "/sbin/start mongodb"
+      # stop program = "/sbin/stop mongodb"
       #
       #
       eck process sshd with pidfile /var/run/sshd.pid
@@ -327,7 +345,8 @@ Install M/Monit on the server and ensure:
       #
       ###################################################################
 
-              
+Mongo db Init script is not available so it cannot be added into monit, As per mongodb website it needs to installed using automation agent.
+
 - b) Monit service is started automatically on port 9812
 
       Uncomment the follow line in monit config file which is at "/etc/monit/monitrc" and change its port to "9812"
@@ -346,3 +365,47 @@ Install M/Monit on the server and ensure:
         $ sudo monit reload
 
 
+#### 4. Setup secure static webservice (Optional)
+ 
+Setup a secure welcome page:
+ 
+- a) install and configure an nginx with a static sample page (take any basic html page), http redirected to https
+
+      To install nginx use the follwoing commands:
+       $ sudo apt-get update
+       $ sudo apt-get install nginx
+       
+      Check the status of the webserver:
+       $ systemctl status nginx
+      
+      We need to adjust the firewall since uwf has been enabled.
+      
+       $ sudo ufw app list
+       
+       Outpput:
+        manan@devops-test-01:~$ sudo ufw app list
+          Available applications:
+            Nginx Full
+            Nginx HTTP
+            Nginx HTTPS
+            OpenSSH
+        
+        Traffic on Prt 80 and 443 is already allowed. So it should be good.
+        
+       Default home page for nginx server is at : /var/www/html/index.nginx-debian.html
+       
+        $ cat /var/www/html/index.nginx-debian.html
+        
+        
+        We can just browser the server ip to see the default page in browser, but other ways to verify via CLI if server is running:
+        
+        wget http://138.197.137.35
+        
+        It will fetch the file and save in the current directory which can be viewed using cat command.
+
+       
+  
+- b) using the dynamic dns solution (enlightNS.com) and the enlightns-cli from github, setup a dynamically updated domain name for the server
+- c) using letsencrypt, generate a valid ssl certificate for the subdomain above and setup the server to auto-renew the certificate
+- d) ensure that the https welcome page requires authentication to be visible to anyone, except those requests coming from a 172.0.0.0/18 subnet
+ 
