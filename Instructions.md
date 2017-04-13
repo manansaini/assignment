@@ -292,12 +292,57 @@ Source for above instructions: https://www.postgresql.org/download/linux/ubuntu/
     #### 3. System Monitoring
  
 Install M/Monit on the server and ensure:
+
+     To install Monit use the below command:
+      $ sudo apt-get install monit
  
 - a) all services created above are monitored
+        
+      To monitor the services it needs to be added in config file, Added below commands to monitor services:
+      
+      
+      ######################################################
+      #               Custon Config to monitor services
+      #####################################################
+      #
+      #
+      check process mysqld with pidfile /var/run/mysqld/mysqld.pid
+      start program = "/etc/init.d/mysqld start"
+      stop program = "/etc/init.d/mysqld stop"
+      #
+      #
+      check process postgresql with pidfile /var/lib/postgresql/9.4/main/postmaster.pid
+      start program = "/etc/init.d/postgresql start"
+      stop program = "/etc/init.d/postgresql stop"
+      #
+      #
+      check process mongodb with pidfile "/var/lib/mongodb/mongod.lock"
+       start program = "/sbin/start mongodb"
+       stop program = "/sbin/stop mongodb"
+      #
+      #
+      eck process sshd with pidfile /var/run/sshd.pid
+      start program "/etc/init.d/ssh start"
+      stop program "/etc/init.d/ssh stop"
+      #
+      ###################################################################
+
+              
 - b) Monit service is started automatically on port 9812
+
+      Uncomment the follow line in monit config file which is at "/etc/monit/monitrc" and change its port to "9812"
+       set httpd port 9812 and
+
+
 - c) secure Monit, to be visible only with credentials
- 
- https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-monit
- 
-http://www.tecmint.com/how-to-install-and-setup-monit-linux-process-and-services-monitoring-program/
+      
+      In the same config file "/etc/monit/monitrc" uncommented following lines to login using username and pass:
+      
+        use address localhost  # only accept connection from localhost
+        allow localhost        # allow localhost to connect to the server and
+        allow admin:monit      # require user 'admin' with password 'monit'
+        
+        And monit needs to be relaoded after config change:
+        $ sudo monit reload
+
 
