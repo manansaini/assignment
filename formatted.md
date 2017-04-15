@@ -42,7 +42,7 @@ Edit the ssh config file using vi editor as below:
 
         $ vi /etc/ssh/sshd_config
         
- Find the below line if value is not set to "no" change it to "no", which is already "no" in our case:
+ Find the below line if value is not set to **"no"** and change it to **"no"**, which is already **"no"** in our case:
  
         PasswordAuthentication no
        
