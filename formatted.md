@@ -15,7 +15,9 @@ how they were resolved
           ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGTPr0SREeyJUdCFlCFTo37AYADSTxYFY55xnETgYVH/12H3FDHwhNDokM8K+a9SrXk4eHk2+VGaRMNIQdM/3+u7Z2GyA15iITBgNZrDCXOnIpVMLTMX0yzHaQL+d3n14oJCRTNJJn/oLduHXOrDJSjFAsUsBg0BGaBAVcGkVDXPmrc46Xhf+Al/Hck8hmdNr84BdRolV2JWDr08Lw1WPF12Ld1CnrUuRQ4xfQmcYhVdQPU3vSv9xPj1GqaqQ6QbWXaOq54fGvTUR1Oyuc9cLX13dg4mBO4lsb1glyW2M5F9XGLBAlChIf1j+24mIoVf0ID2DF2QHCwla/HRrKlWQD manan@devops-test-01
 
 
-** Login to the Ubuntu server as a "root" user using private key authentication.**
+
+
+**Login to the Ubuntu server as a "root" user using private key authentication.**
 
 ## Task
 
