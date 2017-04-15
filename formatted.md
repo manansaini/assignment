@@ -94,7 +94,7 @@ Command syntax that is used to lock the installed packages:
 
        sudo apt-mark hold <package_name>
        
-Following are the commands are used to lock the version installed (these are used after installting all the packages):
+Following are the commands used to lock the version installed (these are used after installting all the packages):
        
        sudo apt-mark hold mariadb-server
        sudo apt-mark hold postgresql-9.4
@@ -112,6 +112,8 @@ Output:
         postgresql-9.4 set on hold.
         manan@devops-test-01:~$ sudo apt-mark hold mongodb-org
         mongodb-org set on hold.
+        manan@devops-test-01:~$ sudo apt-mark hold monit
+        monit set on hold.
 
 <br /><br />  
 > **Switching to user "manan" to perform the further operation since manan is the part of sudo group and can perform root operations. So most of the commands you will see ownward proceeded by "sudo".**
@@ -144,7 +146,7 @@ Added traffic to below incoming ports for this assignment purposes:
         $ sudo ufw allow 80
         $ sudo ufw allow 443
         $ sudo ufw allow 21/tcp
-        $ sudo ufw allow 3306    # This is added for mysql, you will find explanation in next section
+        $ sudo ufw allow 3306    # This is added for mysql port, you will find explanation in the next section
        
 If you have to allow port range you can do it as well :
 
@@ -160,12 +162,11 @@ If service name need to be enable rather than port number it can be done as belo
         $ sudo ufw allow https
         $ sudo ufw allow ftp
        
-       
+<br /><br />       
 ### 2. Install required packages
  
 Setup Mariadb 10+, PostgreSQL 9.4 and MongoDB. 
 
-<br /><br />
 #### 1. Install Mariadb on ubuntu:
           
 Before installting Mariadb we need to import the repository key and add the MariaDB repository. Below are the commands:
@@ -180,7 +181,7 @@ Once the key is imported and the repository added, use below commands to install
           $ sudo apt update
           $ sudo apt install mariadb-server
        
-Follow the prompt to create password for "root" user which is setup to "alayacare-mariadb" for this assignment purposes.
+Follow the prompt to create password for **"root"** user which is setup to **"alayacare-mariadb"** for this assignment purposes.
        
 Once installation gets complete check the mariadb servie if it is running:
 
@@ -241,7 +242,7 @@ In order to provide "maria_db_test" db access to user use the below command:
 
 You need to edit the default config file that can be found at /etc/mysql/my.cnf
 
-       $ vi /etc/mysql/my.cnf
+       $ sudo vi /etc/mysql/my.cnf
       
 Comment the below lines:
 
@@ -282,7 +283,7 @@ We can use below command to enforce the  ssl connection but SSL cert needs to be
 
 In order to install this specific version "$ apt-get install postgresql-9.4" command won't work, as It won't find the specific package by using default repository. In order to do the work around  please follow the below steps:
 
-1. Create the file /etc/apt/sources.list.d/pgdg.list, and add a line for the repository
+1. Create the file /etc/apt/sources.list.d/pgdg.list, and add  the following line for the repository
 
           deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main
           
@@ -292,7 +293,7 @@ In order to install this specific version "$ apt-get install postgresql-9.4" com
            sudo apt-key add -
            sudo apt-get update
            
-3. Now ue the command to install:
+3. Now use the below command to install:
 
            $ apt-get install postgresql-9.4
    
@@ -346,7 +347,7 @@ To monitor the services it needs to be added in config file, Added below command
       
       
       ######################################################
-      #               Custon Config to monitor services
+      #               Custom Config to monitor services
       #####################################################
       #
       #
@@ -367,14 +368,13 @@ To monitor the services it needs to be added in config file, Added below command
       #
       ###################################################################
 
-Mongo db Init script is not available so it cannot be added into monit, As per mongodb website Init scripts needs to installed using automation agent.
+Mongodb Init script is not available so it cannot be added into monit, As per mongodb website Init scripts needs to installed using automation agent.
 <br /><br />  
 #### - b) Monit service is started automatically on port 9812
 
 Uncomment the follow line in monit config file which is at "/etc/monit/monitrc" and change its port to "9812"
 
        set httpd port 9812 and
-
 <br /><br />  
 #### - c) secure Monit, to be visible only with credentials
       
@@ -392,7 +392,6 @@ In the same config file "/etc/monit/monitrc" uncommented following lines to logi
  
 Setup a secure welcome page:
  
-<br /><br />  
 #### - a) install and configure an nginx with a static sample page (take any basic html page), http redirected to https
 
 To install nginx use the following commands:
@@ -444,9 +443,9 @@ But this will create an issue since all traffic is going to redirect to https bu
 <br /><br />  
 #### - b) using the dynamic dns solution (enlightNS.com) and the enlightns-cli from github, setup a dynamically updated domain name for the server
 
-Domain Name created for this assignment purposes: **http://alayacare.enlightNS.info**. Currently this is pointing to the custom page I set it up on nginx server. On enlightns account I have setup A record for DNS, So A record is pointing to IP of this ubuntu server (138.197.137.35)
+Domain Name created for this assignment purposes: **http://alayacare.enlightNS.info**. Currently this is pointing to the custom page I set it up on nginx server. On enlightns account I have setup **A** record for DNS, So **A** record is pointing to IP of this ubuntu server (138.197.137.35)
       
-          Name 	   Content 	  Type  TTL 	
+          Name 	    Content 	  Type  TTL 	
           Alayacare 	138.197.137.35     A 	  30
      
 <br /><br />  
