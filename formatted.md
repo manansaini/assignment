@@ -22,18 +22,20 @@ how they were resolved
 ## Task
 
 ### 1. Secure System
-#### - a) disable ssh login for root
-      
-Edit the ssh config file using vi editor as below:
+<br /><br />
+ #### - a) disable ssh login for root
 
-        $ vi /etc/ssh/sshd_config
-          
-Find the below line and change it to PermitRootLogin as no:
-        
-        PermitRootLogin no
-        
-After making the changes SSH need to be restarted but we will restart after next step.
-       
+ Edit the ssh config file using vi editor as below:
+
+         $ vi /etc/ssh/sshd_config
+
+ Find the below line and change it to PermitRootLogin as no:
+
+         PermitRootLogin no
+
+ After making the changes SSH need to be restarted but we will restart after next step.
+
+<br /><br />
 #### - b) disable ssh password based login
 
 Edit the ssh config file using vi editor as below:
@@ -48,15 +50,16 @@ Save the config file and restart the SSH service using below command:
 
         $ service ssh restart
           
+<br /><br />
+#### - c) create a user for yourself and include the user in the **sudo** group
 
-- c) create a user for yourself and include the user in the **sudo** group
+Add a new user using below command (Password for this account is **alayacareassignment**):
 
-        Adda new user using below command:
          $ adduser manan
         
-        <password for this account is alayacareassignment>
+
         
-        Below was the Output:
+Below was the Output:
                    
             Adding user `manan' ...
             Adding new group `manan' (1000) ...
@@ -76,24 +79,29 @@ Save the config file and restart the SSH service using below command:
             Is the information correct? [Y/n] Y
 
         
-        Add user into sudo group using below command:
+Add user into sudo group using below command:
+
         $ adduser manan sudo
         
-        Another way to add into sudo group is <use sudo in front of command if it's not root account>:
+Another way to add into sudo group is (use sudo in front of command if it's not a root account):
+
         $ usermod -aG <groupname> <username>
           
-- d) ensure that all the packages installed below are locked to the version installed, however, security updates need to be installed on every run
+<br /><br />
+#### - d) ensure that all the packages installed below are locked to the version installed, however, security updates need to be installed on every run
+
+Command syntax that is used to lock the installed packages:
 
        sudo apt-mark hold <package_name>
        
-       Following are the commands that I used to lock the version installed (these are used after installting all the packages):
+Following are the commands are used to lock the version installed (these are used after installting all the packages):
        
        sudo apt-mark hold mariadb-server
        sudo apt-mark hold postgresql-9.4
        sudo apt-mark hold mongodb-org
        sudo apt-mark hold monit
 
-       Output:
+Output:
        
         manan@devops-test-01:~$ sudo vi /etc/monit/monitrc
         [sudo] password for manan:
@@ -106,7 +114,7 @@ Save the config file and restart the SSH service using below command:
         mongodb-org set on hold.
 
   
-### Switching to user "manan" to perform the further operation since manan is the part of sudo group and can perform root operations. So most of the commands you will see ownward proceeded by "sudo".
+> Switching to user "manan" to perform the further operation since manan is the part of sudo group and can perform root operations. So most of the commands you will see ownward proceeded by "sudo".
 
 
 - e) implement a firewall to restrict network access (ports only)
