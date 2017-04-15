@@ -619,7 +619,7 @@ Complete config file looks like this:
                          }
                  }
           
-Any time you update  config file, service needs to be restarted. "nginx -t" command can be used to check if all the syntax are correct in the config file.
+At any point config file updated, service needs to be restarted. **"nginx -t"** command can be used to check if all the syntax are correct in the config file.
 
 Now if you visit http://alayacare.enlightns.info/ it will promopt for username and password except if request is coming from 172.0.0.0/18 subnet and it will redirect you to https link which uses the lets encrypt cert.
 
