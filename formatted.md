@@ -16,78 +16,38 @@ how they were resolved
 
 
 
-### Tasks
- 
-#### 1. Secure System
- 
-SSH into the AWS server using the key provided for the user **ubuntu**. Initial setup includes:
- 
-- a) disable ssh login for root
-- b) disable ssh password based login
-- c) create a user for yourself and include the user in the **sudo** group
-- d) ensure that all the packages installed below are locked to the version installed, however, security updates need to be installed on every run
-- e) implement a firewall to restrict network access (ports only)
- 
-#### 2. Install required packages
- 
-Setup Mariadb 10+, PostgreSQL 9.4 and MongoDB. In Mariadb:
- 
-- a) create a secure root user login
-- b) create a user (do not create a super user), create a database owned by that user
-- c) allow remote access to the database created using the user above
-- d) enforce ssl connection for the user (optional)
- 
-#### 3. System Monitoring
- 
-Install M/Monit on the server and ensure:
- 
-- a) all services created above are monitored
-- b) Monit service is started automatically on port 9812
-- c) secure Monit, to be visible only with credentials
- 
-#### 4. Setup secure static webservice (Optional)
- 
-Setup a secure welcome page:
- 
-- a) install and configure an nginx with a static sample page (take any basic html page), http
-redirected to https
-- b) using the dynamic dns solution (enlightNS.com) and the enlightns-cli from github, setup a
-dynamically updated domain name for the server
-- c) using letsencrypt, generate a valid ssl certificate for the subdomain above and setup the server
-to auto-renew the certificate
-- d) ensure that the https welcome page requires authentication to be visible to anyone, except those
-requests coming from a 172.0.0.0/18 subnet
- 
- ---------------------------------------------------------
- 
 
  Login to the Ubuntu server as a "root" user using private key authentication.
 
+## Task
 
- #### 1. Secure System
- - a) disable ssh login for root
+### 1. Secure System
+#### - a) disable ssh login for root
       
-       Edit the ssh config file using vi editor as below:
+Edit the ssh config file using vi editor as below:
+
         $ vi /etc/ssh/sshd_config
-   
-       
-       Find the below line and change it to PermitRootLogin as no:
+          
+Find the below line and change it to PermitRootLogin as no:
+        
         PermitRootLogin no
         
-       After making the changes SSH need to be restarted but we will restart after next step.
+After making the changes SSH need to be restarted but we will restart after next step.
        
-- b) disable ssh password based login
+#### - b) disable ssh password based login
 
-       Edit the ssh config file using vi editor as below:
+Edit the ssh config file using vi editor as below:
+
         $ vi /etc/ssh/sshd_config
         
-       Find the below line if value is not set to no change it to no, which is already no in our case:    
+ Find the below line if value is not set to "no" change it to "no", which is already "no" in our case:
+ 
         PasswordAuthentication no
        
-       Close the editor using keyboard keys <esc> : wq <enter>
-       
-       Now restart theSH service using below command:
+Save the config file and restart the SSH service using below command:
+
         $ service ssh restart
+          
 
 - c) create a user for yourself and include the user in the **sudo** group
 
